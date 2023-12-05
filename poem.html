@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rhythmic Poem</title>
+    
+    <style>
+        body {
+            background-color: pink;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #poem-container {
+            max-width: 600px;
+            margin: 20px auto ;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 2s;
+            color: #ae0712;
+        }
+
+        .poem-lines {
+            animation: fadeIn 2s;
+        }
+
+        #next-button {
+            margin-top: 20px;
+            padding: 5px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border: none;
+            background-color: #e94d58;
+            color: white;
+            border-radius: 5px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="poem-container">
+        <div class="poem-lines">
+            <!-- Poem lines will be dynamically added here using JavaScript -->
+        </div>
+    </div>
+    <div>
+        <button id="next-button" onclick="location.href='lastPage.html'">Finally...</button>
+    </div>
+
+    <script>
+        const poemLines = [
+            "Its said lone travellers is what mortals are;",
+            "Yet we have this nagging yearning for something amiss;",
+            "Waiting to be quenched; waiting to be found",
+            "Like a gentle caress on a stormy night,",
+            "An warm embrace on a wintry day",
+            "And a cushion of petals on a bed of rocks",
+            "Someone to share the starry night with,",
+            "Someone to see the first lights of dawn with",
+            "A hearth; a home; A friend; a lover",
+            "For a life without passion is a mere husk",
+            "A soul without love is a mere shell",
+            
+        ];
+
+        let currentPage = 0;
+
+        function nextPage() {
+            const poemLinesContainer = document.getElementById('poem-container');
+
+            if (currentPage < poemLines.length) {
+                const line = document.createElement('p');
+                line.textContent = poemLines[currentPage];
+                poemLinesContainer.appendChild(line);
+                line.classList.add('poem-lines'); // Add the fade-in class
+                currentPage++;
+
+                // Automatically scroll to the new line
+                line.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+                // Add a delay (2000ms = 2 seconds) before showing the next line
+                setTimeout(nextPage, 2500);
+            } else {
+                // Add a button to restart the poem
+                const button = document.createElement('button');
+                button.id = 'next-button';
+                button.textContent = 'Again!?';
+                button.addEventListener('click', () => {
+                    // Clear the poem lines
+                    poemLinesContainer.innerHTML = '';
+                    // Start the poem again
+                    currentPage = 0;
+                    nextPage();
+                });
+                poemLinesContainer.appendChild(button);
+            }
+        }
+
+        // Start displaying the poem when the page loads
+        nextPage();
+    </script>
+</body>
+</html>
